@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  app:
+    image: dijer/netology-ts-diplom
+    ports:
+      - 3000:3000
+    environment:
+      PORT: "${HTTP_PORT}"
+      MONGO_URL: "${MONGO_URL}"
+      JWT_SECRET: "${JWT_SECRET}"
+      SALT: "${SALT}"
