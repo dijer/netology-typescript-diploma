@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { Roles } from 'src/common/decorators/role.decorator';
-import * as roles from 'src/conts/roles';
-import { Message } from './message.schema';
-import { SupportRequestClientService } from './support-request-client.service';
-import { SupportRequest } from './support-request.schema';
-import { SupportRequestService } from './support-request.service';
+import { ProtectWithRoles } from 'src/modules/protect-with-roles.decorator';
+import * as roles from 'src/consts/roles';
+import { Message } from '../support/message.schema';
+import { SupportRequestClientService } from '../support/support-request-client.service';
+import { SupportRequest } from '../support/support-request.schema';
+import { SupportRequestService } from '../support/support-request.service';
 
 @Controller('/api')
 export class SupportController {
@@ -14,7 +14,7 @@ export class SupportController {
   ) {}
 
   @Post('/client/support-requests')
-  @Roles(roles.CLIENT)
+  @ProtectWithRoles(roles.CLIENT)
   async createSupportRequestByClient(@Body() body): Promise<SupportRequest> {
     const supportRequest =
       await this.supportRequestClientService.createSupportRequest(body);
@@ -22,7 +22,7 @@ export class SupportController {
   }
 
   @Get('/client/support-requests')
-  @Roles(roles.CLIENT)
+  @ProtectWithRoles(roles.CLIENT)
   async getSupportRequestsByClient(@Param() params): Promise<SupportRequest[]> {
     const supportRequests =
       await this.supportRequestService.findSupportRequests(params);
@@ -30,7 +30,7 @@ export class SupportController {
   }
 
   @Get('/manager/support-requests')
-  @Roles(roles.MANAGER)
+  @ProtectWithRoles(roles.MANAGER)
   async getSupportRequestsByManager(
     @Param() params,
   ): Promise<SupportRequest[]> {
@@ -40,14 +40,14 @@ export class SupportController {
   }
 
   @Get('/common/support-requests/:id/messages')
-  @Roles(roles.MANAGER, roles.CLIENT)
+  @ProtectWithRoles(roles.MANAGER, roles.CLIENT)
   async getMessages(@Param() params): Promise<Message[]> {
     const messages = this.supportRequestService.getMessages(params.id);
     return messages;
   }
 
   @Post('/common/support-requests/:id/messages')
-  @Roles(roles.MANAGER, roles.CLIENT)
+  @ProtectWithRoles(roles.MANAGER, roles.CLIENT)
   async sendMessage(@Param() params, @Body() body): Promise<Message> {
     const message = this.supportRequestService.sendMessage({
       ...body,
@@ -57,7 +57,7 @@ export class SupportController {
   }
 
   @Post('/common/support-requests/:id/messages/read')
-  @Roles(roles.MANAGER, roles.CLIENT)
+  @ProtectWithRoles(roles.MANAGER, roles.CLIENT)
   async readMessages(@Param() params, @Body() body): Promise<void> {
     await this.supportRequestClientService.markMessagesAsRead({
       ...body,

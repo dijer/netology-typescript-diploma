@@ -1,9 +1,9 @@
-import { Body, Controller, Post, UsePipes, Res, Get } from '@nestjs/common';
-import { PasswordHashPipe } from 'src/common/pipes/passwordHash.pipe';
+import { Body, Controller, Post, UsePipes, Res } from '@nestjs/common';
+import { PasswordHashPipe } from './passwordHash.pipe';
 import { UsersService } from '../users/users.service';
-import { AuthService } from './auth.service';
-import * as roles from 'src/conts/roles';
-import { Roles } from 'src/common/decorators/role.decorator';
+import { AuthService } from '../auth/auth.service';
+import * as roles from 'src/consts/roles';
+import { ProtectWithRoles } from 'src/modules/protect-with-roles.decorator';
 
 @Controller('/api')
 export class AuthController {
@@ -13,7 +13,7 @@ export class AuthController {
   ) {}
 
   @Post('/auth/login')
-  @Roles(roles.ANONYMOUS)
+  @ProtectWithRoles(roles.ANONYMOUS)
   async login(@Body() body, @Res() res) {
     const { token, email, name, contactPhone } = await this.authService.login(
       body,
@@ -26,14 +26,14 @@ export class AuthController {
   }
 
   @Post('/auth/logout')
-  @Roles(roles.REGISTERED)
+  @ProtectWithRoles(roles.REGISTERED)
   async logout(@Res() res) {
     res.clearCookie('jwt');
     return res.sendStatus(200);
   }
 
   @Post('/client/register')
-  @Roles(roles.ANONYMOUS)
+  @ProtectWithRoles(roles.ANONYMOUS)
   @UsePipes(PasswordHashPipe)
   async register(@Body() body) {
     const user = await this.userService.create({

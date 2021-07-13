@@ -7,7 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as jwt from 'jsonwebtoken';
-import { CLIENT } from 'src/conts/roles';
+import { CLIENT } from 'src/consts/roles';
 
 @Injectable()
 export class SearchInterceptor implements NestInterceptor {

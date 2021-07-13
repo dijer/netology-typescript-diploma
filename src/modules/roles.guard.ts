@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import * as jwt from 'jsonwebtoken';
-import * as rolesMap from 'src/conts/roles';
+import * as rolesMap from 'src/consts/roles';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
