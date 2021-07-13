@@ -9,7 +9,6 @@ import { SupportRequestClientService } from './support-request-client.service';
 import { SupportRequestEmployeeService } from './support-request-employee.service';
 import { SupportRequest, SupportRequestSchema } from './support-request.schema';
 import { SupportRequestService } from './support-request.service';
-import { SupportController } from './support.controller';
 
 @Module({
   imports: [
@@ -33,7 +32,6 @@ import { SupportController } from './support.controller';
     MessageGateway,
     ChatGateway,
   ],
-  controllers: [SupportController],
   exports: [
     SupportRequestService,
     SupportRequestClientService,

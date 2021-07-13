@@ -8,13 +8,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ID } from 'src/app.glossary';
-import { Roles } from 'src/common/decorators/role.decorator';
-import * as roles from 'src/conts/roles';
-import { Hotel } from './hotels.schema';
-import { HotelService } from './hotels.service';
-import { HotelRoom } from './room.schema';
-import { HotelRoomService } from './room.service';
-import { SearchInterceptor } from '../../common/interceptors/search.interceptor';
+import { ProtectWithRoles } from 'src/common/auth/protect-with-roles.decorator';
+import * as roles from 'src/consts/roles';
+import { Hotel } from '../hotels/hotels.schema';
+import { HotelService } from '../hotels/hotels.service';
+import { HotelRoom } from '../hotels/room.schema';
+import { HotelRoomService } from '../hotels/room.service';
+import { SearchInterceptor } from './search.interceptor';
 
 @Controller('/api')
 export class HotelsController {
@@ -45,35 +45,35 @@ export class HotelsController {
   }
 
   @Post('/admin/hotels/')
-  @Roles(roles.ADMIN)
+  @ProtectWithRoles(roles.ADMIN)
   async createHotel(@Body() body): Promise<Hotel> {
     const hotel = await this.hotelService.create(body);
     return hotel;
   }
 
   @Get('/admin/hotels/')
-  @Roles(roles.ADMIN)
+  @ProtectWithRoles(roles.ADMIN)
   async getHotels(@Param() params): Promise<Hotel[]> {
     const hotels = await this.hotelService.search(params);
     return hotels;
   }
 
   @Put('/admin/hotels/:id')
-  @Roles(roles.ADMIN)
+  @ProtectWithRoles(roles.ADMIN)
   async updateHotel(@Param() params, @Body() body): Promise<Hotel> {
     const hotel = await this.hotelService.update(params.id, body);
     return hotel;
   }
 
   @Post('/admin/hotel-rooms/')
-  @Roles(roles.ADMIN)
+  @ProtectWithRoles(roles.ADMIN)
   async createHotelRoom(@Body() body): Promise<HotelRoom> {
     const hotelRoom = await this.hotelRoomService.create(body);
     return hotelRoom;
   }
 
   @Put('/admin/hotel-rooms/:id')
-  @Roles(roles.ADMIN)
+  @ProtectWithRoles(roles.ADMIN)
   async updateHotelRoom(@Param() params, @Body() body): Promise<HotelRoom> {
     const hotelRoom = await this.hotelRoomService.update(params.id, body);
     return hotelRoom;

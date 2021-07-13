@@ -8,7 +8,7 @@ import {
 import { Socket } from 'socket.io';
 import * as jwt from 'jsonwebtoken';
 import { SupportRequestService } from './support-request.service';
-import * as roles from 'src/conts/roles';
+import * as roles from 'src/consts/roles';
 
 @WebSocketGateway()
 export class ChatGateway {
