@@ -3,7 +3,7 @@ import { PasswordHashPipe } from './passwordHash.pipe';
 import { UsersService } from '../users/users.service';
 import { AuthService } from '../auth/auth.service';
 import * as roles from 'src/consts/roles';
-import { ProtectWithRoles } from 'src/modules/protect-with-roles.decorator';
+import { ProtectWithRoles } from 'src/common/auth/protect-with-roles.decorator';
 
 @Controller('/api')
 export class AuthController {

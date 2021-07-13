@@ -8,7 +8,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ID } from 'src/app.glossary';
-import { ProtectWithRoles } from 'src/modules/protect-with-roles.decorator';
+import { ProtectWithRoles } from 'src/common/auth/protect-with-roles.decorator';
 import * as roles from 'src/consts/roles';
 import { Hotel } from '../hotels/hotels.schema';
 import { HotelService } from '../hotels/hotels.service';

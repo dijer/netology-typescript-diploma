@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ProtectWithRoles } from 'src/modules/protect-with-roles.decorator';
+import { ProtectWithRoles } from 'src/common/auth/protect-with-roles.decorator';
 import * as roles from 'src/consts/roles';
 import { Message } from '../support/message.schema';
 import { SupportRequestClientService } from '../support/support-request-client.service';

@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import * as roles from 'src/consts/roles';
 import { User } from '../users/users.schema';
 import { UsersService } from '../users/users.service';
-import { ProtectWithRoles } from 'src/modules/protect-with-roles.decorator';
+import { ProtectWithRoles } from 'src/common/auth/protect-with-roles.decorator';
 
 @Controller('/api')
 export class UsersController {
